@@ -16,18 +16,35 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-jackson -->
+
+        <dependency>
+            <groupId>com.tinqinacademy.hotel</groupId>
+            <artifactId>restexport</artifactId>
+            <version>${hotelrestexportversion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tinqinacademy.comments</groupId>
+            <artifactId>restexport</artifactId>
+            <version>${commentsrestexportversion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tinqinacademy.authentication</groupId>
+            <artifactId>restexport</artifactId>
+            <version>${authenticationrestexportversion}</version>
+        </dependency>
+
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jackson</artifactId>
-            <version>13.3</version>
+            <version>${feignjacksonvesrion}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-okhttp -->
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
-            <version>13.3</version>
+            <version>${feignokhttpvesrion}</version>
         </dependency>
 
     </dependencies>

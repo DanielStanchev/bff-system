@@ -14,6 +14,12 @@
         <java.version>21</java.version>
         <revision>0.0.1-SNAPSHOT</revision>
         <flattenpomversion>1.2.7</flattenpomversion>
+        <hotelrestexportversion>0.0.1-SNAPSHOT</hotelrestexportversion>
+        <commentsrestexportversion>0.0.1-SNAPSHOT</commentsrestexportversion>
+        <authenticationrestexportversion>0.0.1-SNAPSHOT</authenticationrestexportversion>
+        <feignjacksonvesrion>13.3</feignjacksonvesrion>
+        <feignokhttpvesrion>13.3</feignokhttpvesrion>
+        <feignstarterversion>4.1.3</feignstarterversion>
     </properties>
 
     <groupId>com.tinqinacademy.bff</groupId>
@@ -24,24 +30,18 @@
     <modules>
         <module>api</module>
         <module>core</module>
-        <module>persistence</module>
         <module>domain</module>
         <module>rest</module>
         <module>restexport</module>
     </modules>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>4.1.3</version>
+            <version>${feignstarterversion}</version>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
-        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,11 +54,12 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>
