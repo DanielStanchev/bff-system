@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ApplicationBeanConfiguration {
+public class ObjectMapperConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -20,5 +20,4 @@ public class ApplicationBeanConfiguration {
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         return mapper;
     }
-
 }
