@@ -49,11 +49,11 @@ public class AddRoomOperationProcessor extends BaseOperationProcessor implements
     private Either<ErrorWrapper, AddRoomBffOutput> addRoom(AddRoomBffInput input) {
         return Try.of(() -> {
 
-                AddRoomInput convertedHotelInput =
+                AddRoomInput convertedRoomInput =
                     conversionService.convert(input, AddRoomInput.class);
 
                 AddRoomOutput output =
-                    hotelRestClient.addRoom(convertedHotelInput);
+                    hotelRestClient.addRoom(convertedRoomInput);
 
                 AddRoomBffOutput convertedBffOutput =
                     conversionService.convert(output, AddRoomBffOutput.class);

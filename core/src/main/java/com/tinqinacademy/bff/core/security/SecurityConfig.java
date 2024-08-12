@@ -1,5 +1,6 @@
 package com.tinqinacademy.bff.core.security;
 
+import com.tinqinacademy.bff.api.restapiroutes.RestApiRoutes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,20 +17,17 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private final String[] ADMIN_URLS = {
-//        RestApiRoutes.SYSTEM_DELETE_ROOM,
-//        RestApiRoutes.SYSTEM_PARTIAL_UPDATE_ROOM,
-//        RestApiRoutes.SYSTEM_UPDATE_ROOM
+        RestApiRoutes.SYSTEM_REGISTER_VISITOR,
+        RestApiRoutes.SYSTEM_REPORT_VISITOR_INFO,
+        RestApiRoutes.SYSTEM_CREATE_ROOM,
+        RestApiRoutes.SYSTEM_UPDATE_ROOM,
+        RestApiRoutes.SYSTEM_UPDATE_ROOM_PARTIALLY,
+        RestApiRoutes.SYSTEM_DELETE_ROOM
     };
     private final String[] USER_URLS = {
-//        RestApiRoutes.HOTEL_ADD_COMMENT
+        RestApiRoutes.HOTEL_UNBOOK_ROOM,
+        RestApiRoutes.HOTEL_BOOK_ROOM
     };
-
-//    private static final String[] PUBLIC_URLS = {
-//        "/swagger-ui.html",
-//        "/swagger-ui/**",
-//        "/v3/api-docs/**",
-//        "/webjars/**"
-//    };
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -42,7 +40,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(request -> {
                 request.requestMatchers(ADMIN_URLS).hasAuthority("ADMIN");
                 request.requestMatchers(USER_URLS).hasAnyAuthority("USER", "ADMIN");
-                //request.requestMatchers(PUBLIC_URLS).permitAll();
                 request.anyRequest().permitAll();
             })
             .sessionManagement(
