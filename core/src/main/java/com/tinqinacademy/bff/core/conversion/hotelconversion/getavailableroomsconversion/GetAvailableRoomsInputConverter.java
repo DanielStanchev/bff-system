@@ -1,7 +1,7 @@
 package com.tinqinacademy.bff.core.conversion.hotelconversion.getavailableroomsconversion;
 
 import com.tinqinacademy.bff.api.operations.hoteloperations.getavailablerooms.GetAvailableRoomsBffInput;
-import com.tinqinacademy.bff.core.conversion.BaseConverter;
+import com.tinqinacademy.bff.core.base.BaseConverter;
 import com.tinqinacademy.hotel.api.operations.getavailablerooms.GetAvailableRoomsInput;
 import org.springframework.stereotype.Component;
 

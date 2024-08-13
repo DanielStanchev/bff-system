@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.core.security;
+package com.tinqinacademy.bff.core.config;
 
 import com.tinqinacademy.bff.api.restapiroutes.RestApiRoutes;
 import org.springframework.context.annotation.Bean;

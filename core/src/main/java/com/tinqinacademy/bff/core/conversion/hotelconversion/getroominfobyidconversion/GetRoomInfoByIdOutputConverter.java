@@ -2,7 +2,7 @@ package com.tinqinacademy.bff.core.conversion.hotelconversion.getroominfobyidcon
 
 import com.tinqinacademy.bff.api.operations.hoteloperations.getroominfobyid.GetRoomDatesOccupiedBffInfo;
 import com.tinqinacademy.bff.api.operations.hoteloperations.getroominfobyid.GetRoomInfoByIdBffOutput;
-import com.tinqinacademy.bff.core.conversion.BaseConverter;
+import com.tinqinacademy.bff.core.base.BaseConverter;
 import com.tinqinacademy.hotel.api.operations.getroominfobyid.GetRoomDatesOccupiedInfo;
 import com.tinqinacademy.hotel.api.operations.getroominfobyid.GetRoomInfoByIdOutput;
 import org.springframework.core.convert.ConversionService;

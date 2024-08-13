@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.core.security;
+package com.tinqinacademy.bff.core.config;
 
 import com.tinqinacademy.authentication.api.operations.authenticateuser.AuthenticateUserInput;
 import com.tinqinacademy.authentication.api.operations.authenticateuser.AuthenticateUserOutput;

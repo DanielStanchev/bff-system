@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.core.security;
+package com.tinqinacademy.bff.core.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package com.tinqinacademy.bff.core.conversion.hotelconversion.deleteroomconversion;
 
 import com.tinqinacademy.bff.api.operations.hoteloperations.deleteroom.DeleteRoomBffInput;
-import com.tinqinacademy.bff.core.conversion.BaseConverter;
+import com.tinqinacademy.bff.core.base.BaseConverter;
 import com.tinqinacademy.hotel.api.operations.deleteroom.DeleteRoomInput;
 import org.springframework.stereotype.Component;
 
