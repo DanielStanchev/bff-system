@@ -7,15 +7,14 @@ import com.tinqinacademy.bff.api.operations.hoteloperations.addroom.AddRoomBffIn
 import com.tinqinacademy.bff.api.operations.hoteloperations.addroom.AddRoomBffOutput;
 import com.tinqinacademy.bff.core.base.BaseOperationProcessor;
 import com.tinqinacademy.bff.core.exception.ErrorMapper;
-import com.tinqinacademy.bff.core.exception.exceptions.NotFoundException;
 import com.tinqinacademy.bff.domain.HotelRestClient;
 import com.tinqinacademy.hotel.api.operations.addroom.AddRoomInput;
 import com.tinqinacademy.hotel.api.operations.addroom.AddRoomOutput;
+import feign.FeignException;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,43 +29,31 @@ import static io.vavr.Predicates.instanceOf;
 public class AddRoomOperationProcessor extends BaseOperationProcessor implements AddRoom {
 
     private final HotelRestClient hotelRestClient;
-    private final ApplicationContext applicationContext;
 
-    public AddRoomOperationProcessor(ConversionService conversionService, Validator validator,
-                                     HotelRestClient hotelRestClient, ErrorMapper errorMapper, ApplicationContext applicationContext) {
-        super(validator, conversionService,errorMapper);
+    public AddRoomOperationProcessor(ConversionService conversionService,
+                                     HotelRestClient hotelRestClient, ErrorMapper errorMapper,Validator validator) {
+        super(conversionService,errorMapper,validator);
         this.hotelRestClient = hotelRestClient;
-        this.applicationContext = applicationContext;
     }
 
     @Override
-    public Either<ErrorWrapper, AddRoomBffOutput> process(AddRoomBffInput input) {
-        log.info("Start createRoom input:{}.", input);
-
-        return addRoom(input);
+    public Either<ErrorWrapper, AddRoomBffOutput> process(AddRoomBffInput bffInput) {
+        log.info("Start createRoom input:{}.", bffInput);
+        return validateInput(bffInput).flatMap(validated->addRoom(bffInput));
     }
 
-    private Either<ErrorWrapper, AddRoomBffOutput> addRoom(AddRoomBffInput input) {
+    private Either<ErrorWrapper, AddRoomBffOutput> addRoom(AddRoomBffInput bffInput) {
         return Try.of(() -> {
-
-                AddRoomInput convertedRoomInput =
-                    conversionService.convert(input, AddRoomInput.class);
-
-                AddRoomOutput output =
-                    hotelRestClient.addRoom(convertedRoomInput);
-
-                AddRoomBffOutput convertedBffOutput =
-                    conversionService.convert(output, AddRoomBffOutput.class);
-
-                log.info("End createRoom output:{}.", convertedBffOutput);
-                return convertedBffOutput;
+                AddRoomInput input = conversionService.convert(bffInput, AddRoomInput.class);
+                AddRoomOutput output = hotelRestClient.addRoom(input);
+                AddRoomBffOutput bffOutput = conversionService.convert(output, AddRoomBffOutput.class);
+                log.info("End createRoom output:{}.", bffOutput);
+                return bffOutput;
 
             })
             .toEither()
             .mapLeft(throwable -> Match(throwable).of(
-                Case($(instanceOf(NotFoundException.class)), errorMapper.handleError(throwable, HttpStatus.NOT_FOUND)),
-                Case($(instanceOf(IllegalArgumentException.class)), errorMapper.handleError(throwable, HttpStatus.BAD_REQUEST)),
-                Case($(), errorMapper.handleError(throwable, HttpStatus.BAD_REQUEST))
+                Case($(instanceOf(FeignException.class)), errorMapper.handleError(throwable, HttpStatus.BAD_REQUEST))
             ));
     }
 }

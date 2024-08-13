@@ -23,7 +23,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final AuthenticationRestExport authenticationRestExport;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    @NotNull HttpServletResponse response,
+                                    @NotNull FilterChain filterChain)
         throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
@@ -35,13 +37,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = authHeader.substring(7);
 
         try {
-            AuthenticateUserInput input = AuthenticateUserInput.builder().token(jwt).build();
+            AuthenticateUserInput input = AuthenticateUserInput.builder()
+                .token(jwt)
+                .build();
 
             AuthenticateUserOutput output = authenticationRestExport.authenticate(input);
 
-            UserAuthority userAuthority = UserAuthority.builder().authority(output.getRole().toUpperCase()).build();
+            UserAuthority userAuthority = UserAuthority.builder()
+                .authority(output.getRole().toUpperCase())
+                .build();
 
-            LoggedUserDetails loggedUserDetails = LoggedUserDetails.builder().role(userAuthority.getAuthority()).username(output.getUsername()).build();
+            LoggedUserDetails loggedUserDetails = LoggedUserDetails.builder()
+                .role(userAuthority.getAuthority())
+                .id(output.getUsername()).build();
 
             Authentication authenticationToken = new JwtAuthenticationToken(loggedUserDetails);
 

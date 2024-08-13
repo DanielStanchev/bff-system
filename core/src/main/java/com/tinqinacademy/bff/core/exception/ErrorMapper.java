@@ -33,4 +33,13 @@ public class ErrorMapper {
             .errorResponseInfoList(responses)
             .build();
     }
+
+    public ErrorWrapper handleFeignError(Throwable ex, HttpStatus httpStatus) {
+        return ErrorWrapper.builder()
+            .errorResponseInfoList(List.of(ErrorResponseInfo.builder()
+                                               .message(ex.getMessage())
+                                               .httpStatus(httpStatus)
+                                               .build()))
+            .build();
+    }
 }

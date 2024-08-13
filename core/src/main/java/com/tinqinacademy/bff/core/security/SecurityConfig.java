@@ -3,6 +3,7 @@ package com.tinqinacademy.bff.core.security;
 import com.tinqinacademy.bff.api.restapiroutes.RestApiRoutes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,17 +17,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+
     private final String[] ADMIN_URLS = {
-        RestApiRoutes.SYSTEM_REGISTER_VISITOR,
-        RestApiRoutes.SYSTEM_REPORT_VISITOR_INFO,
-        RestApiRoutes.SYSTEM_CREATE_ROOM,
-        RestApiRoutes.SYSTEM_UPDATE_ROOM,
-        RestApiRoutes.SYSTEM_UPDATE_ROOM_PARTIALLY,
-        RestApiRoutes.SYSTEM_DELETE_ROOM
+//        RestApiRoutes.SYSTEM_REGISTER_VISITOR,
+//        RestApiRoutes.SYSTEM_REPORT_VISITOR_INFO,
+//        RestApiRoutes.SYSTEM_CREATE_ROOM,
+//        RestApiRoutes.SYSTEM_UPDATE_ROOM,
+//        RestApiRoutes.SYSTEM_UPDATE_ROOM_PARTIALLY,
+//        RestApiRoutes.SYSTEM_DELETE_ROOM
     };
     private final String[] USER_URLS = {
-        RestApiRoutes.HOTEL_UNBOOK_ROOM,
-        RestApiRoutes.HOTEL_BOOK_ROOM
+//        RestApiRoutes.HOTEL_UNBOOK_ROOM,
+//        RestApiRoutes.HOTEL_BOOK_ROOM
     };
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
@@ -38,8 +40,9 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> {
-                request.requestMatchers(ADMIN_URLS).hasAuthority("ADMIN");
-                request.requestMatchers(USER_URLS).hasAnyAuthority("USER", "ADMIN");
+                request.requestMatchers(HttpMethod.GET,RestApiRoutes.HOTEL_GET_AVAILABLE_ROOMS).hasAnyAuthority("USER");
+//                request.requestMatchers(ADMIN_URLS).hasAuthority("ADMIN");
+//                request.requestMatchers(USER_URLS).hasAnyAuthority("USER", "ADMIN");
                 request.anyRequest().permitAll();
             })
             .sessionManagement(

@@ -23,20 +23,20 @@ import java.time.LocalDate;
 public class BookRoomBffInput implements OperationInput {
 
     @JsonIgnore
-    @NotBlank
+    @NotBlank(message = "Room ID cannot be blank.")
     private String roomId;
 
-    @NotNull
+    @NotNull(message = "Start date cannot be null.")
     @FutureOrPresent(message = "Start date should be present or future.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @NotNull
+    @NotNull(message = "End date cannot be null.")
     @FutureOrPresent(message = "Start date should be present or future.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     @JsonIgnore
-    @NotNull
+    @NotBlank(message = "User ID cannot be blank.")
     private String userId;
 }

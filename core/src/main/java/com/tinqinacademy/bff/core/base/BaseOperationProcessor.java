@@ -1,8 +1,8 @@
 package com.tinqinacademy.bff.core.base;
 
+import com.tinqinacademy.bff.core.exception.ErrorMapper;
 import com.tinqinacademy.bff.api.base.OperationInput;
 import com.tinqinacademy.bff.api.exceptionmodel.ErrorWrapper;
-import com.tinqinacademy.bff.core.exception.ErrorMapper;
 import io.vavr.control.Either;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -15,14 +15,14 @@ import java.util.Set;
 @Slf4j
 public abstract class BaseOperationProcessor {
 
-    protected final Validator validator;
     protected final ConversionService conversionService;
     protected final ErrorMapper errorMapper;
+    protected final Validator validator;
 
-    protected BaseOperationProcessor(Validator validator, ConversionService conversionService, ErrorMapper errorMapper) {
-        this.validator = validator;
+    protected BaseOperationProcessor(ConversionService conversionService, ErrorMapper errorMapper, Validator validator) {
         this.conversionService = conversionService;
         this.errorMapper = errorMapper;
+        this.validator = validator;
     }
 
     public Either<ErrorWrapper, ? extends OperationInput> validateInput(OperationInput input){
@@ -35,4 +35,5 @@ public abstract class BaseOperationProcessor {
         ErrorWrapper validationErrors = errorMapper.handleValidationViolation(validationResponse, HttpStatus.BAD_REQUEST);
         return Either.left(validationErrors);
     }
+
 }
