@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.core.security;
+package com.tinqinacademy.bff.core.config;
 
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;

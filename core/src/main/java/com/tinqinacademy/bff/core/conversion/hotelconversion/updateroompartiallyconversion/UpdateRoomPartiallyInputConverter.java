@@ -1,7 +1,7 @@
 package com.tinqinacademy.bff.core.conversion.hotelconversion.updateroompartiallyconversion;
 
 import com.tinqinacademy.bff.api.operations.hoteloperations.updateroompartially.UpdateRoomPartiallyBffInput;
-import com.tinqinacademy.bff.core.conversion.BaseConverter;
+import com.tinqinacademy.bff.core.base.BaseConverter;
 import com.tinqinacademy.hotel.api.operations.updateroompartially.UpdateRoomPartiallyInput;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.rest.controllers;
+package com.tinqinacademy.bff.rest.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,5 +44,4 @@ public abstract class BaseController {
         // Extract specific claims
        return  (String) claims.get("id");
     }
-
 }
