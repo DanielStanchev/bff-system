@@ -9,11 +9,11 @@ import java.util.List;
 
 @Builder
 public class LoggedUserDetails implements UserDetails {
-    private String username;
+    private String id;
     private String role;
 
-    public LoggedUserDetails(String username,String role) {
-        this.username = username;
+    public LoggedUserDetails(String id,String role) {
+        this.id = id;
         this.role = role;
     }
 
@@ -32,6 +32,6 @@ public class LoggedUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return id;
     }
 }

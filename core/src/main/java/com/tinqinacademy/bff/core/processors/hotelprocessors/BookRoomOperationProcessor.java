@@ -6,10 +6,10 @@ import com.tinqinacademy.bff.api.operations.hoteloperations.bookroom.BookRoomBff
 import com.tinqinacademy.bff.api.operations.hoteloperations.bookroom.BookRoomBffOutput;
 import com.tinqinacademy.bff.core.base.BaseOperationProcessor;
 import com.tinqinacademy.bff.core.exception.ErrorMapper;
-import com.tinqinacademy.bff.core.exception.exceptions.NotFoundException;
 import com.tinqinacademy.bff.domain.HotelRestClient;
 import com.tinqinacademy.hotel.api.operations.bookroom.BookRoomInput;
 import com.tinqinacademy.hotel.api.operations.bookroom.BookRoomOutput;
+import feign.FeignException;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
 import jakarta.validation.Validator;
@@ -29,31 +29,29 @@ public class BookRoomOperationProcessor extends BaseOperationProcessor implement
 
     private final HotelRestClient hotelRestClient;
 
-    public BookRoomOperationProcessor(ConversionService conversionService, Validator validator, ErrorMapper errorMapper,
+    public BookRoomOperationProcessor(ConversionService conversionService, ErrorMapper errorMapper, Validator validator,
                                       HotelRestClient hotelRestClient) {
-        super(validator, conversionService, errorMapper);
+        super(conversionService, errorMapper,validator);
         this.hotelRestClient = hotelRestClient;
     }
 
     @Override
-    public Either<ErrorWrapper, BookRoomBffOutput> process(BookRoomBffInput input) {
-        log.info("Start bookRoom input:{}.", input);
-        return bookRoom(input);
+    public Either<ErrorWrapper, BookRoomBffOutput> process(BookRoomBffInput bffInput) {
+        log.info("Start bookRoom input:{}.", bffInput);
+        return validateInput(bffInput).flatMap(validated->bookRoom(bffInput));
     }
 
-    private Either<ErrorWrapper, BookRoomBffOutput> bookRoom(BookRoomBffInput input) {
+    private Either<ErrorWrapper, BookRoomBffOutput> bookRoom(BookRoomBffInput bffInput) {
         return Try.of(()->{
-
-                BookRoomInput convertedBookRoomInput = conversionService.convert(input,BookRoomInput.class);
-                BookRoomOutput output = hotelRestClient.bookRoom(convertedBookRoomInput.getRoomId(),convertedBookRoomInput);
-                log.info("End bookRoom output:{}",output);
-                return BookRoomBffOutput.builder().build();
+                BookRoomInput input = conversionService.convert(bffInput,BookRoomInput.class);
+                BookRoomOutput output = hotelRestClient.bookRoom(input.getRoomId(),input);
+                BookRoomBffOutput bffOutput = conversionService.convert(output,BookRoomBffOutput.class);
+                log.info("End bookRoom output:{}",bffOutput);
+                return bffOutput;
 
         }).toEither()
             .mapLeft(throwable -> Match(throwable).of(
-                Case($(instanceOf(NotFoundException.class)), errorMapper.handleError(throwable, HttpStatus.NOT_FOUND)),
-                Case($(instanceOf(IllegalArgumentException.class)), errorMapper.handleError(throwable, HttpStatus.BAD_REQUEST)),
-                Case($(), errorMapper.handleError(throwable, HttpStatus.BAD_REQUEST))
+                Case($(instanceOf(FeignException.class)), errorMapper.handleError(throwable, HttpStatus.BAD_REQUEST))
             ));
     }
 }

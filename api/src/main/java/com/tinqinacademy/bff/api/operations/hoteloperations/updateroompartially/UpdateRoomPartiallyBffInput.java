@@ -1,13 +1,15 @@
-package com.tinqinacademy.bff.api.operations.hoteloperations.addroom;
+package com.tinqinacademy.bff.api.operations.hoteloperations.updateroompartially;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.tinqinacademy.bff.api.base.OperationInput;
 import com.tinqinacademy.bff.api.customvalidation.hotelvalidations.bathroomtypevalidation.BathroomTypeValidation;
 import com.tinqinacademy.bff.api.customvalidation.hotelvalidations.bedsizevalidation.BedSizeValidation;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,32 +28,36 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder(toBuilder = true)
-public class AddRoomBffInput implements OperationInput {
+@Builder
 
-    @NotNull(message = "Bed count cannot be null.")
-    @Min(value = 1, message = "Min bed count should be no more than 1")
-    @Max(value = 5, message = "Max bed count should be no more than 5")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class UpdateRoomPartiallyBffInput implements OperationInput {
+
+    @JsonIgnore
+    @NotBlank(message = "Room ID cannot be blank.")
+    private String id;
+
+    @Min(value = 1, message = "Minimum bed count is 1.")
+    @Max(value = 5, message = "Maximum bed count is 5.")
+    @Nullable
     private Integer bedCount;
 
-    @NotNull(message = "Bathroom type cannot be null.")
-    @BathroomTypeValidation
+    @Size(min = 2, max = 15, message = "Enter a valid bathroom type.")
+    @BathroomTypeValidation(optional = true)
     private String bathroomType;
 
-    @NotNull(message = "Floor cannot be null.")
-    @Min(value = -2, message = "Lowest floor is -2.")
-    @Max(value = 16, message = "Highest floor is 16.")
+    @Min(value = -2, message = "Minimum floor is -2.")
+    @Max(value = 16, message = "Maximum floor is 16.")
     private Integer floor;
 
-    @NotNull(message = "Room number cannot be null.")
+
     @Size(min = 2, max = 20, message = "Room number should be between 2 and 20 symbols.")
     private String roomNo;
 
-    @NotNull(message = "Price cannot be null.")
-    @Positive(message = "Price should be positive !")
+    @Positive(message = "Price should be positive.")
     private BigDecimal price;
 
-    @NotEmpty(message = "Bed sizes to insert should correspond to bed count.")
     @Builder.Default
-    private List<@BedSizeValidation @Valid String> beds = new ArrayList<>();
+    private List<@BedSizeValidation(optional = true) @Valid String> beds = new ArrayList<>();
+
 }

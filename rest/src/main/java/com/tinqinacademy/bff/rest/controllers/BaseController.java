@@ -42,7 +42,7 @@ public abstract class BaseController {
         Map<String, Object> claims = objectMapper.readValue(payload, Map.class);
 
         // Extract specific claims
-       return  (String) claims.get("sub");
+       return  (String) claims.get("id");
     }
 
 }
