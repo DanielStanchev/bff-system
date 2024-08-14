@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -22,10 +21,10 @@ import java.time.LocalDate;
 @Builder
 public class ReportVisitorsInfoBffInput implements OperationInput {
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape=JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     @Size(min = 2, max = 30, message = "First name should be between 2 and 30 symbols.")
@@ -40,12 +39,12 @@ public class ReportVisitorsInfoBffInput implements OperationInput {
     @Size(min = 2, max = 30,message = "ID card number should be between 2 and 30 symbols.")
     private String idCardNo;
 
-    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate idCardValidity;
 
     private String idCardIssueAuthority;
 
-    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate cardIssueDate;
 
     @NotNull(message = "Room number cannot be null.")

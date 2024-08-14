@@ -51,15 +51,15 @@ public class ReportVisitorsInfoOperationProcessor extends BaseOperationProcessor
     private Either<ErrorWrapper, ReportVisitorsInfoBffOutput> reportVisitorsInfo(ReportVisitorsInfoBffInput bffInput) {
         return Try.of(()->{
             ReportVisitorsInfoInput input = conversionService.convert(bffInput, ReportVisitorsInfoInput.class);
-            ReportVisitorsInfoOutput output = hotelRestClient.report(Optional.of(input.getStartDate()),
-                                                                     Optional.of(input.getEndDate()),
-                                                                     Optional.of(input.getFirstName()),
-                                                                     Optional.of(input.getLastName()),
-                                                                     Optional.of(input.getPhoneNo()),
-                                                                     Optional.of(input.getIdCardNo()),
-                                                                     Optional.of(input.getIdCardValidity()),
-                                                                     Optional.of(input.getIdCardIssueAuthority()),
-                                                                     Optional.of(input.getCardIssueDate()),
+            ReportVisitorsInfoOutput output = hotelRestClient.report(Optional.ofNullable(input.getStartDate()),
+                                                                     Optional.ofNullable(input.getEndDate()),
+                                                                     Optional.ofNullable(input.getFirstName()),
+                                                                     Optional.ofNullable(input.getLastName()),
+                                                                     Optional.ofNullable(input.getPhoneNo()),
+                                                                     Optional.ofNullable(input.getIdCardNo()),
+                                                                     Optional.ofNullable(input.getIdCardValidity()),
+                                                                     Optional.ofNullable(input.getIdCardIssueAuthority()),
+                                                                     Optional.ofNullable(input.getCardIssueDate()),
                                                                      input.getRoomNo());
             ReportVisitorsInfoBffOutput bffOutput = conversionService.convert(output, ReportVisitorsInfoBffOutput.class);
             log.info("End reportVisitorInfo output: {}", bffOutput);
