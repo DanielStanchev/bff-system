@@ -9,8 +9,8 @@ import com.tinqinacademy.bff.core.base.BaseOperationProcessor;
 import com.tinqinacademy.bff.core.exception.ErrorMapper;
 
 import com.tinqinacademy.bff.domain.HotelRestClient;
-import com.tinqinacademy.hotel.api.operations.visitorreportinfo.ReportVisitorsInfoInput;
-import com.tinqinacademy.hotel.api.operations.visitorreportinfo.ReportVisitorsInfoOutput;
+import com.tinqinacademy.hotel.api.operations.reportvisitorinfo.ReportVisitorsInfoInput;
+import com.tinqinacademy.hotel.api.operations.reportvisitorinfo.ReportVisitorsInfoOutput;
 import feign.FeignException;
 import io.vavr.control.Either;
 import io.vavr.control.Try;

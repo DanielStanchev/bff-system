@@ -40,7 +40,7 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> {
-                request.requestMatchers(HttpMethod.GET,RestApiRoutes.HOTEL_GET_AVAILABLE_ROOMS).hasAnyAuthority("USER");
+          //      request.requestMatchers(HttpMethod.GET,RestApiRoutes.HOTEL_GET_AVAILABLE_ROOMS).hasAnyAuthority("User");
 //                request.requestMatchers(ADMIN_URLS).hasAuthority("ADMIN");
 //                request.requestMatchers(USER_URLS).hasAnyAuthority("USER", "ADMIN");
                 request.anyRequest().permitAll();

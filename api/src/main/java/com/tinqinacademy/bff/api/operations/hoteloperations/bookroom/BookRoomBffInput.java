@@ -1,5 +1,6 @@
 package com.tinqinacademy.bff.api.operations.hoteloperations.bookroom;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tinqinacademy.bff.api.base.OperationInput;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -28,12 +29,12 @@ public class BookRoomBffInput implements OperationInput {
 
     @NotNull(message = "Start date cannot be null.")
     @FutureOrPresent(message = "Start date should be present or future.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", shape=JsonFormat.Shape.STRING)
     private LocalDate startDate;
 
     @NotNull(message = "End date cannot be null.")
     @FutureOrPresent(message = "Start date should be present or future.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
     private LocalDate endDate;
 
     @JsonIgnore
