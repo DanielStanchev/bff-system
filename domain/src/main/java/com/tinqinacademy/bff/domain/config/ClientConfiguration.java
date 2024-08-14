@@ -4,12 +4,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ClientConfiguration {
-//    private final ObjectMapper objectMapper;
-//
-//    public ClientConfiguration(ObjectMapper objectMapper) {
-//        this.objectMapper = objectMapper;
-//    }
-
     //used with feign client
 //    @Bean
 //    public OkHttpClient client() {

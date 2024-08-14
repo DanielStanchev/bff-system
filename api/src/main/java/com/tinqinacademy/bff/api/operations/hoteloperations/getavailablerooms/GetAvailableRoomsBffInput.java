@@ -15,7 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,11 +30,11 @@ import java.util.List;
 public class GetAvailableRoomsBffInput implements OperationInput {
 
     @NotNull(message = "Start date cannot be null.")
-    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @NotNull(message = "End date cannot be null.")
-    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     @NotNull(message = "Bed count cannot be null.")
