@@ -10,6 +10,7 @@ public class UpdateRoomInputConverter extends BaseConverter<UpdateRoomBffInput, 
     @Override
     protected UpdateRoomInput convertObject(UpdateRoomBffInput source) {
         return UpdateRoomInput.builder()
+            .id(source.getId())
             .bedCount(source.getBedCount())
             .beds(source.getBeds())
             .bathroomType(source.getBathroomType())
