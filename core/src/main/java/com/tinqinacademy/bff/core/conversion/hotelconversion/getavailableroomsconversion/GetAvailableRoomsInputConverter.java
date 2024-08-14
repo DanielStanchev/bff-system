@@ -12,9 +12,9 @@ public class GetAvailableRoomsInputConverter extends BaseConverter<GetAvailableR
         return GetAvailableRoomsInput.builder()
             .startDate(source.getStartDate())
             .endDate(source.getEndDate())
-            .bathroomType(source.getBathroomType())
             .bedCount(source.getBedCount())
             .beds(source.getBeds())
+            .bathroomType(source.getBathroomType())
             .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.tinqinacademy.bff.api.operations.hoteloperations.registervisitor;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tinqinacademy.bff.api.base.OperationInput;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
@@ -26,12 +27,12 @@ public class RegisterVisitorBffInput implements OperationInput {
 
     @NotNull(message = "Start date cannot be null.")
     @FutureOrPresent(message = "Start date should be present or future.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", shape=JsonFormat.Shape.STRING)
     private LocalDate startDate;
 
     @NotNull(message = "End date cannot be null.")
     @FutureOrPresent(message = "End date should be present or future.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
     private LocalDate endDate;
 
     @NotNull(message = "First name cannot be null.")
@@ -43,7 +44,7 @@ public class RegisterVisitorBffInput implements OperationInput {
     private String lastName;
 
     @FutureOrPresent(message = "ID card validity should be present or future.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
     private LocalDate idCardValidity;
 
     @Size(min = 2, max = 30,message = "ID card issue authority should be between 2 and 30 symbols.")
@@ -53,7 +54,7 @@ public class RegisterVisitorBffInput implements OperationInput {
     private String idCardNo;
 
     @PastOrPresent(message = "Card issue date should be past or present.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
     private LocalDate idCardIssueDate;
 
     @Size(min = 2, max = 30,message = "Phone number should be between 2 and 30 symbols.")
@@ -65,6 +66,6 @@ public class RegisterVisitorBffInput implements OperationInput {
 
     @NotNull(message = "Birth date cannot be null.")
     @Past(message = "Birth date should be in the past.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
     private LocalDate birthDate;
 }

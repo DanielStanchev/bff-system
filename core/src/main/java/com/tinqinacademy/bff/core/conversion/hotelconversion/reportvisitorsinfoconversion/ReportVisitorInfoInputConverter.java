@@ -2,7 +2,7 @@ package com.tinqinacademy.bff.core.conversion.hotelconversion.reportvisitorsinfo
 
 import com.tinqinacademy.bff.api.operations.hoteloperations.reportvisitorinfo.ReportVisitorsInfoBffInput;
 import com.tinqinacademy.bff.core.base.BaseConverter;
-import com.tinqinacademy.hotel.api.operations.visitorreportinfo.ReportVisitorsInfoInput;
+import com.tinqinacademy.hotel.api.operations.reportvisitorinfo.ReportVisitorsInfoInput;
 import org.springframework.stereotype.Component;
 
 @Component

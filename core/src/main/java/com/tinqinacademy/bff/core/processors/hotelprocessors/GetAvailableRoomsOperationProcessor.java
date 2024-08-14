@@ -45,8 +45,10 @@ public class GetAvailableRoomsOperationProcessor extends BaseOperationProcessor 
         return Try.of(()->{
 
             GetAvailableRoomsInput input = conversionService.convert(bffInput, GetAvailableRoomsInput.class);
+
             GetAvailableRoomsOutput output = hotelRestClient.getAvailableRooms(input.getStartDate(),input.getEndDate(),input.getBedCount(),
                                                                                input.getBeds(),input.getBathroomType());
+
             GetAvailableRoomsBffOutput bffOutput = conversionService.convert(output, GetAvailableRoomsBffOutput.class);
             log.info("End checkAvailableRooms output: {} ",bffOutput);
             return bffOutput;

@@ -1,5 +1,6 @@
 package com.tinqinacademy.bff.api.operations.hoteloperations.getavailablerooms;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tinqinacademy.bff.api.base.OperationInput;
 import com.tinqinacademy.bff.api.customvalidation.hotelvalidations.bathroomtypevalidation.BathroomTypeValidation;
 import com.tinqinacademy.bff.api.customvalidation.hotelvalidations.bedsizevalidation.BedSizeValidation;
@@ -30,11 +31,11 @@ import java.util.List;
 public class GetAvailableRoomsBffInput implements OperationInput {
 
     @NotNull(message = "Start date cannot be null.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
     private LocalDate startDate;
 
     @NotNull(message = "End date cannot be null.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
     private LocalDate endDate;
 
     @NotNull(message = "Bed count cannot be null.")
@@ -42,11 +43,11 @@ public class GetAvailableRoomsBffInput implements OperationInput {
     @Max(value = 5, message = "Max bed count should be no more than 5")
     private Integer bedCount;
 
-    @NotNull(message = "Bathroom type cannot be null.")
-    @BathroomTypeValidation
-    private String bathroomType;
-
     @NotEmpty(message = "Bed sizes should correspond to bed count.")
     @Builder.Default
     private List<@BedSizeValidation @Valid String> beds = new ArrayList<>();
+
+    @NotNull(message = "Bathroom type cannot be null.")
+    @BathroomTypeValidation
+    private String bathroomType;
 }

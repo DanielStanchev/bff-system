@@ -100,14 +100,14 @@ public class HotelController extends BaseController {
     public ResponseEntity<?> getAvailableRooms(@RequestParam(value = "startDate") LocalDate startDate,
                                                @RequestParam(value = "endDate") LocalDate endDate,
                                                @RequestParam(value = "bedCount") Integer bedCount,
-                                               @RequestParam(value = "bedSize") List<String> beds,
+                                               @RequestParam(value = "beds") List<String> beds,
                                                @RequestParam(value = "bathroomType") String bathroomType) {
         GetAvailableRoomsBffInput input = GetAvailableRoomsBffInput.builder()
             .startDate(startDate)
             .endDate(endDate)
             .bedCount(bedCount)
-            .bathroomType(bathroomType)
             .beds(beds)
+            .bathroomType(bathroomType)
             .build();
 
         Either<ErrorWrapper, GetAvailableRoomsBffOutput> output = getAvailableRooms.process(input);
