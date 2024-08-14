@@ -10,12 +10,13 @@ public class UpdateRoomPartiallyInputConverter extends BaseConverter<UpdateRoomP
     @Override
     protected UpdateRoomPartiallyInput convertObject(UpdateRoomPartiallyBffInput source) {
         return UpdateRoomPartiallyInput.builder()
+            .id(source.getId())
             .bedCount(source.getBedCount())
-            .beds(source.getBeds())
             .bathroomType(source.getBathroomType())
             .floor(source.getFloor())
             .roomNo(source.getRoomNo())
             .price(source.getPrice())
+            .beds(source.getBeds())
             .build();
     }
 }

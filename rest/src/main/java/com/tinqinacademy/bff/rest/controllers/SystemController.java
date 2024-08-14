@@ -166,7 +166,7 @@ public class SystemController extends BaseController {
             .build();
 
         Either<ErrorWrapper, UpdateRoomPartiallyBffOutput> output = updateRoomPartially.process(input);
-        return new ResponseEntity<>(output,HttpStatus.OK);
+        return handleResult(output,HttpStatus.OK);
     }
 
     @Operation(summary = "Create a room.")
