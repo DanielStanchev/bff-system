@@ -4,29 +4,29 @@ import com.tinqinacademy.bff.api.operations.hoteloperations.reportvisitorinfo.Re
 import com.tinqinacademy.bff.api.operations.hoteloperations.reportvisitorinfo.ReportVisitorsInfoBffOutput;
 import com.tinqinacademy.bff.core.base.BaseConverter;
 import com.tinqinacademy.hotel.api.operations.reportvisitorinfo.ReportVisitorsInfoOutput;
-import com.tinqinacademy.hotel.api.operations.reportvisitorinfo.ReportVisitorsInfoOutputInfo;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
-import java.util.List;
 
 @Component
 public class ReportVisitorInfoOutputConverter extends BaseConverter<ReportVisitorsInfoOutput, ReportVisitorsInfoBffOutput> {
 
-    private final ConversionService conversionService;
-
-    public ReportVisitorInfoOutputConverter(ConversionService conversionService) {this.conversionService = conversionService;}
-
     @Override
     protected ReportVisitorsInfoBffOutput convertObject(ReportVisitorsInfoOutput source) {
 
-        List<ReportVisitorsInfoOutputInfo> visitorsInfo = source.getVisitorsReport();
-        List<ReportVisitorsBffInfoOutputInfo> visitorsBffInfo =
-            Collections.singletonList(conversionService.convert(visitorsInfo, ReportVisitorsBffInfoOutputInfo.class));
-
         return ReportVisitorsInfoBffOutput.builder()
-            .visitorsReport(visitorsBffInfo)
+            .visitorsReport(source.getVisitorsReport()
+                                .stream()
+                                .map(visitorreport -> ReportVisitorsBffInfoOutputInfo.builder()
+                                    .startDate(visitorreport.getStartDate())
+                                    .endDate(visitorreport.getEndDate())
+                                    .firstName(visitorreport.getFirstName())
+                                    .lastName(visitorreport.getLastName())
+                                    .phoneNo(visitorreport.getPhoneNo())
+                                    .idCardNo(visitorreport.getIdCardNo())
+                                    .idCardValidity(visitorreport.getIdCardValidity())
+                                    .idCardIssueAuthority(visitorreport.getIdCardIssueAuthority())
+                                    .cardIssueDate(visitorreport.getCardIssueDate())
+                                    .build())
+                                .toList())
             .build();
     }
 }
