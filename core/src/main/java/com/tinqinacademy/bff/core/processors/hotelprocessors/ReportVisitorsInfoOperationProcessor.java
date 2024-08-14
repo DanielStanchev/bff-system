@@ -59,7 +59,8 @@ public class ReportVisitorsInfoOperationProcessor extends BaseOperationProcessor
                                                                      Optional.of(input.getIdCardNo()),
                                                                      Optional.of(input.getIdCardValidity()),
                                                                      Optional.of(input.getIdCardIssueAuthority()),
-                                                                     Optional.of(input.getCardIssueDate()), input.getRoomNo());
+                                                                     Optional.of(input.getCardIssueDate()),
+                                                                     input.getRoomNo());
             ReportVisitorsInfoBffOutput bffOutput = conversionService.convert(output, ReportVisitorsInfoBffOutput.class);
             log.info("End reportVisitorInfo output: {}", bffOutput);
             return bffOutput;

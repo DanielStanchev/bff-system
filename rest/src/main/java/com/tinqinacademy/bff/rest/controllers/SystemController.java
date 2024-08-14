@@ -91,7 +91,7 @@ public class SystemController extends BaseController {
         return handleResult(output, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Get basic info by various criteria.")
+    @Operation(summary = "Report room info by various criteria.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "OK"),
         @ApiResponse(responseCode = "404", description = "Not found")})

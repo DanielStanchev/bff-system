@@ -19,6 +19,8 @@ public class RegisterVisitorInputConverter extends BaseConverter<RegisterVisitor
             .idCardValidity(source.getIdCardValidity())
             .idCardIssueAuthority(source.getIdCardIssueAuthority())
             .idCardIssueDate(source.getIdCardIssueDate())
+            .birthDate(source.getBirthDate())
+            .roomNo(source.getRoomNo())
             .build();
     }
 }

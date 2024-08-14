@@ -1,6 +1,5 @@
 package com.tinqinacademy.bff.rest.controllers;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tinqinacademy.bff.api.exceptionmodel.ErrorWrapper;
