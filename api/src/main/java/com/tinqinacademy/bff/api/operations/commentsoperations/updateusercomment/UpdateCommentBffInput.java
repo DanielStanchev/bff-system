@@ -24,6 +24,7 @@ public class UpdateCommentBffInput implements OperationInput {
     @NotBlank(message = "Comment ID cannot be blank.")
     private String commentId;
 
+    @JsonIgnore
     @NotNull(message = "User ID cannot be null.")
     private String userId;
 

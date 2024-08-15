@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.core.config;
+package com.tinqinacademy.bff.core.config.securityconfig;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 

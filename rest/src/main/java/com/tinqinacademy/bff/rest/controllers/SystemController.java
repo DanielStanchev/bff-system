@@ -2,6 +2,12 @@ package com.tinqinacademy.bff.rest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tinqinacademy.bff.api.exceptionmodel.ErrorWrapper;
+import com.tinqinacademy.bff.api.operations.commentsoperations.deletecomment.DeleteComment;
+import com.tinqinacademy.bff.api.operations.commentsoperations.deletecomment.DeleteCommentBffInput;
+import com.tinqinacademy.bff.api.operations.commentsoperations.deletecomment.DeleteCommentBffOutput;
+import com.tinqinacademy.bff.api.operations.commentsoperations.editadmincomment.EditComment;
+import com.tinqinacademy.bff.api.operations.commentsoperations.editadmincomment.EditCommentBffInput;
+import com.tinqinacademy.bff.api.operations.commentsoperations.editadmincomment.EditCommentBffOutput;
 import com.tinqinacademy.bff.api.operations.hoteloperations.addroom.AddRoom;
 import com.tinqinacademy.bff.api.operations.hoteloperations.addroom.AddRoomBffInput;
 import com.tinqinacademy.bff.api.operations.hoteloperations.addroom.AddRoomBffOutput;
@@ -53,10 +59,12 @@ public class SystemController extends BaseController {
     private final ReportVisitorsInfo reportVisitorsInfo;
     private final UpdateRoom updateRoom;
     private final UpdateRoomPartially updateRoomPartially;
+    private final DeleteComment deleteComment;
+    private final EditComment editComment;
 
     public SystemController(ObjectMapper objectMapper, DeleteRoom deleteRoom, AddRoom addRoom, RegisterVisitor registerVisitor, ReportVisitorsInfo reportVisitorsInfo,
                             UpdateRoom updateRoom,
-                            UpdateRoomPartially updateRoomPartially) {
+                            UpdateRoomPartially updateRoomPartially, DeleteComment deleteComment, EditComment editComment) {
         super(objectMapper);
         this.deleteRoom = deleteRoom;
         this.addRoom = addRoom;
@@ -64,6 +72,8 @@ public class SystemController extends BaseController {
         this.reportVisitorsInfo = reportVisitorsInfo;
         this.updateRoom = updateRoom;
         this.updateRoomPartially = updateRoomPartially;
+        this.deleteComment = deleteComment;
+        this.editComment = editComment;
     }
 
     @Operation(summary = "Register a guest in existing booking.")
@@ -191,7 +201,8 @@ public class SystemController extends BaseController {
 
     @Operation(summary = "Delete room.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "OK")
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "400", description = "Bad request")
     })
     @DeleteMapping(RestApiRoutes.SYSTEM_DELETE_ROOM)
     public ResponseEntity<?> deleteRoom(@PathVariable("roomId") String roomId){
@@ -204,4 +215,36 @@ public class SystemController extends BaseController {
         return handleResult(output,HttpStatus.OK);
     }
 
+    @Operation(summary = "Delete a comment")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "400", description = "Bad request")})
+    @DeleteMapping(RestApiRoutes.SYSTEM_DELETE_COMMENT)
+    public ResponseEntity<?> deleteComment(@PathVariable("commentId") String commentId,
+                                           @RequestBody DeleteCommentBffInput deleteCommentBffInput){
+
+        DeleteCommentBffInput input = DeleteCommentBffInput.builder()
+            .commentId(commentId)
+            .build();
+
+        Either<ErrorWrapper, DeleteCommentBffOutput> output = deleteComment.process(input);
+        return handleResult(output,HttpStatus.OK);
+    }
+
+    @Operation(summary = "Admin edit a comment.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "400", description = "Bad request")})
+    @PutMapping(RestApiRoutes.SYSTEM_EDIT_COMMENT)
+    public ResponseEntity<?> editCommentByAdmin(@PathVariable("commentId") String commentId,
+                                                @RequestBody EditCommentBffInput editCommentBffInput){
+        EditCommentBffInput input = EditCommentBffInput.builder()
+            .commentId(commentId)
+            .roomId(editCommentBffInput.getRoomId())
+            .content(editCommentBffInput.getContent())
+            .build();
+
+        Either<ErrorWrapper, EditCommentBffOutput> output = editComment.process(input);
+        return handleResult(output, HttpStatus.OK);
+    }
 }
