@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.api.operations.commentsoperations.postcomment;
+package com.tinqinacademy.bff.api.operations.commentsoperations.addcomment;
 
 import com.tinqinacademy.bff.api.base.OperationOutput;
 import lombok.AllArgsConstructor;
@@ -14,6 +14,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class PostCommentBffOutput implements OperationOutput {
+public class AddCommentBffOutput implements OperationOutput {
     private String id;
 }

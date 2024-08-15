@@ -1,4 +1,4 @@
-package com.tinqinacademy.bff.api.operations.commentsoperations.postcomment;
+package com.tinqinacademy.bff.api.operations.commentsoperations.addcomment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tinqinacademy.bff.api.base.OperationInput;
@@ -18,13 +18,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class PostCommentBffInput implements OperationInput {
+public class AddCommentBffInput implements OperationInput {
 
     @JsonIgnore
     @NotBlank(message = "Room ID cannot be blank.")
     private String roomId;
 
     @NotBlank(message = "User ID cannot be blank.")
+    @JsonIgnore
     private String userId;
 
     @NotNull(message = "Content cannot be null.")

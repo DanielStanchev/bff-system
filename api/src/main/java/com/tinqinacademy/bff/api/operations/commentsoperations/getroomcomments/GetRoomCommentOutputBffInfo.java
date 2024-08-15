@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Builder
-public class GetRoomCommentOutputBffInfo {
+public class    GetRoomCommentOutputBffInfo {
 
     private String id;
     private String userId;
