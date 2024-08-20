@@ -1,5 +1,6 @@
 package com.tinqinacademy.bff.core.config.securityconfig;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,21 +8,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@AllArgsConstructor
 @Builder
 public class LoggedUserDetails implements UserDetails {
+    private UserAuthority userAuthority;
     private String id;
-    private String role;
 
-    public LoggedUserDetails(String id,String role) {
-        this.id = id;
-        this.role = role;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        UserAuthority userAuthority = UserAuthority.builder()
-            .authority(role)
-            .build();
         return List.of(userAuthority);
     }
 
