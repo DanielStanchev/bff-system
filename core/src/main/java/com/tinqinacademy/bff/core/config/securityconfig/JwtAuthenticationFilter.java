@@ -34,26 +34,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String jwt = authHeader.substring(7);
+        String token = authHeader.substring(7);
 
         try {
-            AuthenticateUserInput input = AuthenticateUserInput.builder()
-                .token(jwt)
-                .build();
+            AuthenticateUserInput userToken = AuthenticateUserInput.builder().token(token).build();
 
-            AuthenticateUserOutput output = authenticationRestExport.authenticate(input);
+            AuthenticateUserOutput authenticateUser = authenticationRestExport.authenticate(userToken);
 
-            UserAuthority userAuthority = UserAuthority.builder()
-                .authority(output.getRole().toUpperCase())
-                .build();
+            UserAuthority userAuthority = UserAuthority.builder().authority(authenticateUser.getRole().toUpperCase()).build();
 
             LoggedUserDetails loggedUserDetails = LoggedUserDetails.builder()
-                .role(userAuthority.getAuthority())
-                .id(output.getUsername()).build();
+                .userAuthority(userAuthority)
+                .id(authenticateUser.getId())
+                .build();
 
-            Authentication authenticationToken = new JwtAuthenticationToken(loggedUserDetails);
+            Authentication authenticationTokenInfo = new AuthenticationTokenInfo(loggedUserDetails);
 
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authenticationTokenInfo);
 
         } catch (Exception ignored) {}
 
