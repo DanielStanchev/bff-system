@@ -2,7 +2,8 @@ package com.tinqinacademy.bff.core.config.securityconfig;
 
 import com.tinqinacademy.authentication.api.operations.authenticateuser.AuthenticateUserInput;
 import com.tinqinacademy.authentication.api.operations.authenticateuser.AuthenticateUserOutput;
-import com.tinqinacademy.authentication.restexport.AuthenticationRestExport;
+import com.tinqinacademy.bff.domain.AuthenticationRestClient;
+import feign.FeignException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,12 +17,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Slf4j
 @Component
 @AllArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final AuthenticationRestExport authenticationRestExport;
+    private final AuthenticationRestClient authenticationRestClient;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -40,18 +42,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             AuthenticateUserInput userToken = AuthenticateUserInput.builder().token(token).build();
 
-            AuthenticateUserOutput authenticateUser= authenticationRestExport.authenticate(userToken);
+            AuthenticateUserOutput authenticateUser;
 
-            // i am using this for test the authentication
-//            try{
-//                log.info("userToken: {}", userToken);
-//                authenticateUser = authenticationRestExport.authenticate(userToken);
-//
-//            } catch (FeignException e){
-//                log.error(e.getMessage());
-//                log.error(Arrays.toString(e.getStackTrace()));
-//                throw new RuntimeException("asd");
-//            }
+//           using this for test the authentication
+            try{
+                log.info("userToken: {}", userToken);
+                authenticateUser = authenticationRestClient.authenticate(userToken);
+
+            } catch (FeignException e){
+                log.error(e.getMessage());
+                log.error(Arrays.toString(e.getStackTrace()));
+                throw new RuntimeException("asd");
+            }
 
             UserAuthority userAuthority = UserAuthority.builder().authority(authenticateUser.getRole().toUpperCase()).build();
 
