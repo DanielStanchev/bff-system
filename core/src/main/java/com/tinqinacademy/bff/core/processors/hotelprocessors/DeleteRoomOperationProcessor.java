@@ -41,7 +41,7 @@ public class DeleteRoomOperationProcessor extends BaseOperationProcessor impleme
 
     @Override
     public Either<ErrorWrapper, DeleteRoomBffOutput> process(DeleteRoomBffInput bffInput) {
-        log.info("Start deleteRoom input: {} ",bffInput);
+        //log.info("Start deleteRoom input: {} ",bffInput);
         return validateInput(bffInput).flatMap(validated->deleteRoom(bffInput));
     }
 
@@ -52,7 +52,7 @@ public class DeleteRoomOperationProcessor extends BaseOperationProcessor impleme
             DeleteRoomOutput output = hotelRestClient.deleteRoom(input.getId());
             DeleteRoomBffOutput bffOutput = conversionService.convert(output,DeleteRoomBffOutput.class);
 
-            log.info("End deleteRoom output {} deleted",bffOutput);
+            //log.info("End deleteRoom output {} deleted",bffOutput);
             return bffOutput;
 
         }).toEither().mapLeft(throwable -> Match(throwable).of(
